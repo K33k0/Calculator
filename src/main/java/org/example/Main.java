@@ -1,7 +1,10 @@
 package org.example;
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.math.BigInteger;
 
 public class Main {
     // This is the main content of the window
@@ -58,7 +61,7 @@ public class Main {
         userInputField1 = new JTextField();
         userInputField2 = new JTextField();
         // As above set the label to be centered.
-        outputField = new JLabel("",JLabel.CENTER);
+        outputField = new JLabel("value",JLabel.CENTER);
         runButton = new JButton("Submit");
 
         interactionPanel = new JPanel();
@@ -91,9 +94,16 @@ public class Main {
 
         setComponentInLayout(interactionPanel,runButton,0,1,2,1,
                 GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0,0);
+
+        runButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addNumbersFromInputs();
+            }
+        });
     }
 
-    private void setComponentInLayout(JPanel panel, JComponent component, int row, int column,
+    private void setComponentInLayout(@NotNull JPanel panel, JComponent component, int row, int column,
                                       int span_columns, int span_rows, int fill, int anchor,
                                       double weightx, double weighty){
         GridBagConstraints gbc = new GridBagConstraints();
@@ -108,5 +118,11 @@ public class Main {
         panel.add(component,gbc);
 
 
+    }
+
+    private void addNumbersFromInputs(){
+        BigInteger num1 = BigInteger.valueOf(Long.parseLong(userInputField1.getText()));
+        BigInteger num2 = BigInteger.valueOf(Long.parseLong(userInputField2.getText()));
+        outputField.setText(String.valueOf(num1.add(num2)));
     }
 }
